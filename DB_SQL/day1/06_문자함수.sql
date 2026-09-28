@@ -79,7 +79,13 @@ SELECT
         length(id),
         '*'
     ),
-    RPAD(SUBSTR(ID,1, LENGTH(ID)-3),LENGTh(ID),'*')
+    rpad(
+        substr(id,
+               1,
+               length(id) - 3),
+        length(id),
+        '*'
+    )
     --SUBSTR(ID,1,LENGTH(ID)-3)||'***' 
     --CONCAT(SUBSTR(ID,1,LENGTH(ID)-3),'***')
 FROM
@@ -87,26 +93,31 @@ FROM
     
 --이메일에서 아이디 뒷부분을 다 * 출력
 SELECT
-    RPAD(
-        SUBSTR(EMAIL,1,INSTR(EMAIL,'@')-1),
-        LENGTH(EMAIL),
+    rpad(
+        substr(email,
+               1,
+               instr(email, '@') - 1),
+        length(email),
         '*'
     )
 FROM
-    PROFESSOR;
+    professor;
     
 --첫글자와 마지막글자 빼고 다 별표
 SELECT
     rpad(
         substr(id, 1, 1),
-        length(id)-1,
+        length(id) - 1,
         '*'
-    ) || SUBSTR(ID,LENGTH(ID))
+    )
+    || substr(id,
+              length(id))
 FROM
-    PROFESSOR;
+    professor;
 
 --REPLACE 문자열을 다른 문자열로 대체
-SELECT 
-    EMAIL,
-    REPLACE(EMAIL, 'net', 'com')
-FROM PROFESSOR;
+SELECT
+    email,
+    replace(email, 'net', 'com')
+FROM
+    professor;

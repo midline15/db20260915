@@ -73,17 +73,17 @@ GROUP BY
 HAVING
     AVG(grade) >= 3;
 
--- 7. 직급별 평균 급여 등급이 3이상인 사람의 수 출력(직급, 3등급 이상 사람 수)
+-- 7. 직급별 급여 등급이 3이상인 사람의 수 출력(직급, 3등급 이상 사람 수)
 SELECT
     job      직급,
     COUNT(*) "사람 수"
 FROM
          emp
     INNER JOIN salgrade s ON sal BETWEEN losal AND hisal
+WHERE
+    grade >= 3
 GROUP BY
-    job
-HAVING
-    AVG(grade) >= 3;
+    job;
 
 -- 8. 부서별 평균 급여 출력. 단, 1800 이상인 부서만.(출력 : 부서번호, 부서이름, 평균 급여)
 SELECT

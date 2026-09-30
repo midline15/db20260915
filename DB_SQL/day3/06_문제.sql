@@ -173,7 +173,7 @@ WHERE
             emp
         WHERE
             ename = 'ALLEN'
-    );
+    ) and ename != 'ALLEN';
 
 -- STU, PROFESSOR, DEPARTMENT
 -- 1. 남자이면서(주민번호 7번째자리 1) 공과대학에 속한 학생의 수를 구하시오.
@@ -242,15 +242,32 @@ HAVING
         GROUP BY
             deptno1
     );
---본인보다 높은 학년인 사람의 학생 수 구하고, 아래 이미지와 같이 결과를 도출하시오.(사용 테이블 : STU)
+    
 SELECT
+    dname,
     COUNT(*)
 FROM
-    stu
-WHERE
-    grade > (
-        SELECT
-            grade
-        FROM
-            stu
-    )
+         stu s
+    INNER JOIN department d ON s.deptno1 = d.deptno
+    inner join (
+        select 
+            max(count(*)) max_s,
+            min(count(*)) min_s
+        from stu
+        group by deptno1
+    ) t on 1=1
+GROUP BY
+    dname, max_s, min_s
+having count(*) in (max_s, min_s);
+    
+--본인보다 높은 학년인 사람의 학생 수 구하고, 아래 이미지와 같이 결과를 도출하시오.(사용 테이블 : STU)
+SELECT
+    COUNT(s2.stuno),
+    s.stuno,
+    s.name,
+    s.grade
+FROM
+    stu s
+left join stu s2 on s2.grade > s.grade
+group by s.stuno, s.name, s.grade
+order by s.grade;

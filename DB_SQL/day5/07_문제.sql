@@ -89,5 +89,10 @@ where custid=3);
 
 --13. 이상미디어의 고객별 판매액을 보이시오(고객이름과 고객별 판매액 출력).
 select 
-    saleprice
-from
+    name,
+    sum(saleprice)
+from orders o
+join book b on o.bookid = b.bookid
+join customer c on c.custid = o.custid
+where b.publisher = '이상미디어'
+group by name;
